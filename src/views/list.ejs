@@ -1,0 +1,33 @@
+<h3>목록 페이지</h3>
+<table border="1">
+    <tr>
+        <th>번호</th> <th>제목</th> <th>등록날짜</th> <th>조회수</th>
+    </tr>
+<% list.forEach( data => { %>
+    <tr>
+        <td><%= data.NUM %></td>   
+        <td><a href="/page/content/<%=data.NUM%>"><%= data.TITLE %></a></td>
+        <td><%= data.PDATE %></td> <td><%= data.COUNT %></td>
+    </tr>
+<% });
+if( list.length == 0 ){%>
+    <tr><td colspan="4"><b>등록된 정보가 없습니다</b></td></tr>
+<%} %>
+    <tr><td colspan="4">
+        <% if( start <= 1){ %>
+            <button disabled>이전</button> <!-- 페이지 1번이면 이전을 비활성화로 만들어 ~ -->
+        <%}else{%>
+            <button type="button" onclick="
+                location.href='/page/list?start=<%=start - 1%>'">이전</button>
+        <% }for(let i=1 ; i <= page.totPage ; i++ ){ %>
+            <a href="/page/list?start=<%= i %>"><%= i %></a>
+        <% }if( start < page.totPage ){%>
+            <button type="button" onclick="
+                location.href='/page/list?start=<%=start + 1%>'">다음</button>
+        <% }else{ %> <!-- 마지막페이지 다음에 더이상 페이지없다면 비활성화하겠다 -->
+            <button disabled>다음</button>
+        <% } %>
+        start : <%= start %> /
+       <%= page.totPage %> / <a href="/page/write_form">글 등록</a>
+    </td></tr>
+</table> 
